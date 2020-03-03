@@ -55,7 +55,7 @@ WORKDIR /extra
 
 RUN wget -q http://fsl.fmrib.ox.ac.uk/fsldownloads/fslinstaller.py && \
     chmod 775 fslinstaller.py && \
-	python fslinstaller.py -d /extra/fsl -V 6.0.1 -q && \
+	python fslinstaller.py -d /extra/fsl -V 6.0.3 -q && \
 	rm -rf fslinstaller.py
 
 
