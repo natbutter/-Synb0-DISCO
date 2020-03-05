@@ -7,12 +7,20 @@ From: nvidia/cuda:9.0-base-ubuntu16.04
 #Implemented by Nathaniel Butterworth at the Sydney Informatics Hub
 #Please acknowledge our contribution to your work where appropriate.
 
+#Run with something like:
+#docker run -it --rm -v C:\WORK\ShortProjects\syn\INPUTS\:/INPUTS -v C:\WORK\ShortProjects\syn\build\license.txt:/extra/freesurfer/license.txt syn /bin/bash
+#singularity run -B INPUTS/:/INPUTS -B OUTPUTS/:/OUTPUTS -B license.txt:/extra/freesurfer/license.txt synb.img
+
+#The prepar_input command in the script takes something like this as input:
+#prepare_input.sh /INPUTS/b0.nii.gz /INPUTS/T1.nii.gz /extra/Synb0-DISCO/atlases/mni_icbm152_t1_tal_nlin_asym_09c.nii.gz /extra/Synb0-DISCO/atlases/mni_icbm152_t1_tal_nlin_asym_09c_2_5.nii.gz /OUTPUTS
+#And the pipeline.sh is the main script driving the container
+
 #Use ubuntu 16.04 base so we can run on Artemis Centos6 host with Singularity.
 #FROM nvidia/cuda:9.0-base-centos6
 
 #Update and install dependencies
 apt-get update && \
-apt-get install -y build-essential libxtst6 libxt6 wget unzip git zlib1g-dev python tcsh dos2unix bc
+apt-get install -y build-essential libxtst6 libxt6 wget unzip git zlib1g-dev python tcsh dos2unix bc iperf
 
 mkdir /extra
 cd /extra
@@ -23,8 +31,7 @@ chmod 775 fslinstaller.py && \
 python fslinstaller.py -d /extra/fsl -V 6.0.3 -q && \
 rm -rf fslinstaller.py
 
-
-# #Set python 3 as default python
+#Set python 3 as default python
 apt-get install -y python3-pip python3-dev
 alias python="/usr/bin/python3" && \
 alias pip="/usr/bin/pip3" && \
@@ -87,7 +94,7 @@ tar zx -C /extra \
 --exclude='freesurfer/lib/cuda' \
 --exclude='freesurfer/lib/qt'
 
-# # #Install Synb0-DISCO, https://github.com/MASILab/Synb0-DISCO
+#Install Synb0-DISCO from https://github.com/MASILab/Synb0-DISCO
 git clone https://github.com/MASILab/Synb0-DISCO.git
 
 wget https://sourceforge.net/projects/c3d/files/c3d/1.0.0/c3d-1.0.0-Linux-x86_64.tar.gz &&\
@@ -114,10 +121,21 @@ mkdir /OUTPUTS
 
 dos2unix /extra/Synb0-DISCO/src/pipeline.sh
 
+touch /extra/freesurfer/license.txt
 
-#docker run -it --rm -v C:\WORK\ShortProjects\syn\INPUTS\:/INPUTS -v C:\WORK\ShortProjects\syn\build\license.txt:/extra/freesurfer/license.txt syn /bin/bash
-#prepare_input.sh /INPUTS/INPUTS/b0.nii.gz /INPUTS/INPUTS/T1.nii.gz /extra/Synb0-DISCO/atlases/mni_icbm152_t1_tal_nlin_asym_09c.nii.gz /extra/Synb0-DISCO/atlases/mni_icbm152_t1_tal_nlin_asym_09c_2_5.nii.gz /OUTPUTS
+chmod 777 /extra/Synb0-DISCO/src/pipeline.sh
+
+
 %environment
+export ANTSPATH=/extra/ants/bin
+export PATH=/extra/ants/bin:$PATH
+export ANTSPATH=/extra/ants/ANTS-build/Examples
+export PATH=/extra/ants/ANTS-build/Examples:$PATH
+export PATH=$PATH:/extra/freesurfer/mni/bin/:/extra/freesurfer/bin/
+export PATH=$PATH:/extra/c3d-1.0.0-Linux-x86_64/bin
+export PATH=$PATH:/extra/Synb0-DISCO/data_processing
+export MNI_DIR=/extra/freesurfer/mni
+export FREESURFER_HOME=/extra/freesurfer
 export ANTSPATH=/extra/ants/bin
 export PATH=/extra/ants/bin:$PATH
 export LD_LIBRARY_PATH=/extra/mcr/v93/runtime/glnxa64:/extra/mcr/v93/bin/glnxa64:/extra/mcr/v93/sys/os/glnxa64
@@ -129,9 +147,14 @@ export PATH=$PATH:/extra/c3d-1.0.0-Linux-x86_64/bin
 export PATH=$PATH:/extra/Synb0-DISCO/data_processing
 export MNI_DIR=/extra/freesurfer/mni
 export FREESURFER_HOME=/extra/freesurfer
+alias python="/usr/bin/python3" 
+alias pip="/usr/bin/pip3" 
+echo 'alias python="/usr/bin/python3"' >> /root/.bashrc 
+echo 'alias pip="/usr/bin/pip3"' >> /root/.bashrc
+alias python3.6="/usr/bin/python3" 
+echo 'alias python3.6="/usr/bin/python3"' >> /root/.bashrc 
+
 %runscript
+alias python3.6="/usr/bin/python3"
 cd /extra
-exec /bin/bash /bin/bash /extra/Synb0-DISCO/src/pipeline.sh "$@"
-%startscript
-cd /extra
-exec /bin/bash /bin/bash /extra/Synb0-DISCO/src/pipeline.sh "$@"
+exec /bin/bash /extra/Synb0-DISCO/src/pipeline.sh "$@"
