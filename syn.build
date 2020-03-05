@@ -9,7 +9,7 @@ From: nvidia/cuda:9.0-base-ubuntu16.04
 
 #Run with something like:
 #docker run -it --rm -v C:\WORK\ShortProjects\syn\INPUTS\:/INPUTS -v C:\WORK\ShortProjects\syn\build\license.txt:/extra/freesurfer/license.txt syn /bin/bash
-#singularity run -B INPUTS/:/INPUTS -B OUTPUTS/:/OUTPUTS -B license.txt:/extra/freesurfer/license.txt synb.img
+#singularity run -B INPUTS/:/INPUTS -B OUTPUTS/:/OUTPUTS -B license.txt:/extra/freesurfer/license.txt syn.img
 
 #The prepar_input command in the script takes something like this as input:
 #prepare_input.sh /INPUTS/b0.nii.gz /INPUTS/T1.nii.gz /extra/Synb0-DISCO/atlases/mni_icbm152_t1_tal_nlin_asym_09c.nii.gz /extra/Synb0-DISCO/atlases/mni_icbm152_t1_tal_nlin_asym_09c_2_5.nii.gz /OUTPUTS
@@ -38,7 +38,8 @@ alias pip="/usr/bin/pip3" && \
 echo 'alias python="/usr/bin/python3"' >> /root/.bashrc && \
 echo 'alias pip="/usr/bin/pip3"' >> /root/.bashrc
 alias python3.6="/usr/bin/python3" && \
-echo 'alias python3.6="/usr/bin/python3"' >> /root/.bashrc && \
+echo 'alias python3.6="/usr/bin/python3"' >> /root/.bashrc 
+ln /usr/bin/python3 /usr/bin/python3.6
 
 #Set up python environment
 pip3 install --upgrade pip
