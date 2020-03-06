@@ -43,7 +43,7 @@ ln /usr/bin/python3 /usr/bin/python3.6
 
 #Set up python environment
 pip3 install --upgrade pip
-pip3 install torch torchvision numpy scipy Pillow dominate
+pip3 install torch torchvision numpy scipy Pillow dominate nibabel
 
 #Install a newer version of cmake
 wget https://github.com/Kitware/CMake/releases/download/v3.13.4/cmake-3.13.4-Linux-x86_64.sh
@@ -100,6 +100,7 @@ git clone https://github.com/MASILab/Synb0-DISCO.git
 
 wget https://sourceforge.net/projects/c3d/files/c3d/1.0.0/c3d-1.0.0-Linux-x86_64.tar.gz &&\
 tar -xzvf c3d-1.0.0-Linux-x86_64.tar.gz
+rm c3d-1.0.0-Linux-x86_64.tar.gz
 	
 ANTSPATH=/extra/ants/ANTS-build/Examples
 PATH=/extra/ants/ANTS-build/Examples:$PATH
@@ -118,7 +119,8 @@ rsync --exclude=*.cxx --exclude=*.a /extra/ants/ANTS-build/Examples/* /extra/ANT
 cp /extra/ants/ITKv5-build/bin/* /extra/ANTS/bin/ants/bin/ && \
 cp /extra/ANTs/Scripts/* /extra/ANTS/ANTs/Scripts
 mkdir /INPUTS 
-mkdir /OUTPUTS
+mkdir /OUTPUTS 
+cp -r Synb0-DISCO/src/* /extra/
 
 dos2unix /extra/Synb0-DISCO/src/pipeline.sh
 
@@ -158,4 +160,4 @@ echo 'alias python3.6="/usr/bin/python3"' >> /root/.bashrc
 %runscript
 alias python3.6="/usr/bin/python3"
 cd /extra
-exec /bin/bash /extra/Synb0-DISCO/src/pipeline.sh "$@"
+exec /bin/bash /extra/pipeline.sh "$@"
