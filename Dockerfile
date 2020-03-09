@@ -1,7 +1,7 @@
 
-#Based on https://github.com/MASILab/Synb0-DISCO/
-#Trying to reverse engineer the dockerfile here but for ubu16.04
-#Hecn some of the weird choices for environemnts.
+#Based on https://github.com/MASILab/Synb0-DISCO/ for Schilling et al. https://doi.org/10.1101/2020.01.19.911784.
+#Trying to reverse engineer the dockerfile but for ubu16.04
+#Hence some of the weird choices for environemnts.
 
 #Implemented by Nathaniel Butterworth at the Sydney Informatics Hub
 #Please acknowledge our contribution to your work where appropriate.
@@ -35,7 +35,7 @@ RUN alias python="/usr/bin/python3" && \
 
 #Set up python environment
 RUN pip3 install --upgrade pip
-RUN pip3 install torch torchvision numpy scipy Pillow dominate
+RUN pip3 install torch torchvision numpy scipy Pillow dominate nibabel
 
 #Install a newer version of cmake
 RUN wget https://github.com/Kitware/CMake/releases/download/v3.13.4/cmake-3.13.4-Linux-x86_64.sh 
