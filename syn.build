@@ -20,7 +20,7 @@ From: nvidia/cuda:9.0-base-ubuntu16.04
 
 #Update and install dependencies
 apt-get update && \
-apt-get install -y build-essential libxtst6 libxt6 wget unzip git zlib1g-dev python tcsh dos2unix bc iperf
+apt-get install -y build-essential libxtst6 libxt6 wget unzip git zlib1g-dev python tcsh dos2unix bc iperf dc
 
 mkdir /extra
 cd /extra
@@ -43,7 +43,7 @@ ln /usr/bin/python3 /usr/bin/python3.6
 
 #Set up python environment
 pip3 install --upgrade pip
-pip3 install torch torchvision numpy scipy Pillow dominate nibabel
+pip3 install torch==1.4 torchvision==0.5 numpy==1.18 scipy==1.4 Pillow==4.3.0 dominate==2.4 nibabel==3.0
 
 #Install a newer version of cmake
 wget https://github.com/Kitware/CMake/releases/download/v3.13.4/cmake-3.13.4-Linux-x86_64.sh
