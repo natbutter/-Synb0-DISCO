@@ -43,7 +43,7 @@ ln /usr/bin/python3 /usr/bin/python3.6
 
 #Set up python environment
 pip3 install --upgrade pip
-pip3 install torch==1.4 torchvision==0.5 numpy==1.18 scipy==1.4 Pillow==4.3.0 dominate==2.4 nibabel==3.0
+pip3 install torch==1.1.0 torchvision==0.3.0 numpy==1.18 scipy==1.4 Pillow==4.3.0 dominate==2.4 nibabel==3.0
 
 #Install a newer version of cmake
 wget https://github.com/Kitware/CMake/releases/download/v3.13.4/cmake-3.13.4-Linux-x86_64.sh
@@ -122,11 +122,11 @@ mkdir /INPUTS
 mkdir /OUTPUTS 
 cp -r Synb0-DISCO/src/* /extra/
 
-dos2unix /extra/Synb0-DISCO/src/pipeline.sh
+dos2unix /extra/pipeline.sh
 
 touch /extra/freesurfer/license.txt
 
-chmod 777 /extra/Synb0-DISCO/src/pipeline.sh
+chmod 777 /extra/pipeline.sh
 
 
 %environment
