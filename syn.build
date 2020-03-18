@@ -121,6 +121,7 @@ cp /extra/ANTs/Scripts/* /extra/ANTS/ANTs/Scripts
 mkdir /INPUTS 
 mkdir /OUTPUTS 
 cp -r Synb0-DISCO/src/* /extra/
+cp -r Synb0-DISCO/src/train_lin /extra/dual_channel_unet
 
 dos2unix /extra/pipeline.sh
 
