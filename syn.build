@@ -157,6 +157,10 @@ echo 'alias python="/usr/bin/python3"' >> /root/.bashrc
 echo 'alias pip="/usr/bin/pip3"' >> /root/.bashrc
 alias python3.6="/usr/bin/python3" 
 echo 'alias python3.6="/usr/bin/python3"' >> /root/.bashrc 
+export PATH=$PATH:/extra/fsl/bin/
+export FSLDIR=/extra/fsl
+export FSLOUTPUTTYPE=NIFTI_GZ
+export PATH=$PATH:$FSLDIR
 
 %runscript
 alias python3.6="/usr/bin/python3"
