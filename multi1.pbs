@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Directives sent to pbs, the job scheduler on Artemis
+#PBS -P Training 
+#PBS -N Qtrain1
+#PBS -l select=1:ncpus=1:mem=4gb
+#PBS -l walltime=01:00:00
+#PBS -q defaultQ
+
+# Load the libraries and software needed
+echo $HOSTNAME
+cd $PBS_O_WORKDIR
+
+module load singularity
+singularity exec -e -B $PBS_O_WORKDIR/INPUTS/:/INPUTS -B $PBS_O_WORKDIR/OUTPUTS/:/OUTPUTS -B $PBS_O_WORKDIR/license.txt:/extra/freesurfer/license.txt syn.simg /INPUTS/pipeline1.sh
