@@ -22,14 +22,15 @@ https://cloudstor.aarnet.edu.au/sender/?s=download&token=02ba6a30-afb8-4a26-83cc
 
 
 # Set up:
-In the top level directory should be the ```INPUTS```, ```OUTPUTS```, ```license.txt```, and singularity image ```syn.simg```
+In the top level directory should be the empty folder ```OUTPUTS```, the freesurfer license file ```license.txt```, the singularity image ```syn.simg```, the pbs jobscripts ```multi*.pbs``` and the ```INPUTS``` folder containing:
 ```
 INPUTS/
   T1.nii.gz  
   acqparams.txt  
   b0.nii.gz
-OUTPUTS
-license.txt
+  pipeline1.sh
+  pipeline2GPU.sh
+  pipeline3.sh
 ```
 Note, to obtain the ```license.txt``` for freesurfer, register for free at: [https://surfer.nmr.mgh.harvard.edu/registration.html](https://surfer.nmr.mgh.harvard.edu/registration.html)
 
